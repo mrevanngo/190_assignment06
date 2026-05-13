@@ -148,14 +148,14 @@ def parse(s: str, today: date | None = None) -> date:
     # "next/coming <weekday>"
     for prefix in ("next ", "coming "):
         if low.startswith(prefix):
-            rest = low[len(prefix):]
+            rest = low[len(prefix) :]
             if rest in WEEKDAYS:
                 return _next_weekday(today, WEEKDAYS[rest])
 
     # "last/previous/past <weekday>"
     for prefix in ("last ", "previous ", "past "):
         if low.startswith(prefix):
-            rest = low[len(prefix):]
+            rest = low[len(prefix) :]
             if rest in WEEKDAYS:
                 return _last_weekday(today, WEEKDAYS[rest])
 
@@ -187,9 +187,7 @@ def parse(s: str, today: date | None = None) -> date:
         return today + _make_delta(unit, n)
 
     # "<n> <unit> from now/today"
-    m = re.match(
-        r"^(\w+)\s+(days?|weeks?|months?|years?)\s+from\s+(now|today)$", low
-    )
+    m = re.match(r"^(\w+)\s+(days?|weeks?|months?|years?)\s+from\s+(now|today)$", low)
     if m:
         n = _to_int(m.group(1))
         unit = UNITS[m.group(2)]
